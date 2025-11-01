@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Fireworks GPT-OSS-20B</title>
+</head>
+<body>
+  <h2>اختبر Fireworks GPT-OSS-20B</h2>
+  <textarea id="prompt" rows="4" cols="60" placeholder="اكتب سؤالك هنا..."></textarea><br>
+  <button id="send">إرسال</button>
+  <pre id="response"></pre>
+
+  <script>
+    document.getElementById("send").addEventListener("click", async () => {
+      const prompt = document.getElementById("prompt").value;
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      document.getElementById("response").textContent =
+        data?.choices?.[0]?.message?.content || "⚠️ لم يتم استلام رد.";
+    });
+  </script>
+</body>
+</html>
